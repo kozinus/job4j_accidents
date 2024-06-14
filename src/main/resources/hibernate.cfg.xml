@@ -13,5 +13,7 @@
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
 
+        <mapping class="ru.job4j.accidents.model.Accident" />
+
     </session-factory>
 </hibernate-configuration>

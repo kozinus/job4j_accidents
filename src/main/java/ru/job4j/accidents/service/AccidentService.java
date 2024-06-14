@@ -17,6 +17,14 @@ public class AccidentService {
         return accidentMem.save(accident);
     }
 
+    public boolean update(Accident accident) {
+        return accidentMem.update(accident);
+    }
+
+    public boolean deleteById(int id) {
+        return accidentMem.deleteById(id);
+    }
+
     public Optional<Accident> findAccidentById(int id) {
         return accidentMem.findById(id);
     }
