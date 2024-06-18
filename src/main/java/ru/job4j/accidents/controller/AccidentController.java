@@ -26,7 +26,7 @@ public class AccidentController {
     public String viewAccident(Model model, @PathVariable int id) {
         Optional<Accident> accidentOptional = accidents.findAccidentById(id);
         if (accidentOptional.isEmpty()) {
-            return "redirect:/index";
+            return "404";
         }
         model.addAttribute("accident", accidentOptional.get());
         return "oneAccident";
@@ -46,7 +46,9 @@ public class AccidentController {
 
     @PostMapping("/updateAccident")
     public String update(@ModelAttribute Accident accident) {
-        accidents.update(accident);
+        if (accidents.update(accident)) {
+            return "404";
+        }
         return "redirect:/index";
     }
 }
