@@ -53,10 +53,12 @@
                 </thead>
                 <tbody>
                 <tr th:each="accident: ${accidents}">
-                    <td th:text="${accident.id}"></td>
-                    <td><a th:text="${accident.name}" th:href="#"></a></td>
-                    <td th:text="${accident.text}"></td>
-                    <td th:text="${accident.address}"></td>
+                    <td>
+                        <a th:href="@{|/oneAccident?id=${accident.id}|}">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                        <span th:text="${accident.name}"></span>
+                    </td>
                 </tr>
                 </tbody>
             </table>
