@@ -47,17 +47,17 @@
                     <th><i class="bi bi-square"></i></th>
                     <th scope="col">#</th>
                     <th scope="col">Имя</th>
-                    <th scope="col">Описание</th>
-                    <th scope="col">Адрес</th>
+                    <th scope="col">Тип</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="accident: ${accidents}">
                     <td>
                         <a th:href="@{|/oneAccident?id=${accident.id}|}">
-                        <i class="fa fa-edit"></i>
-                    </a>
+                            <i class="fa fa-edit"></i>
+                        </a>
                         <span th:text="${accident.name}"></span>
+                        <span th:text="${accident.type.name}"></span>
                     </td>
                 </tr>
                 </tbody>
