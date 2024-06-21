@@ -29,7 +29,7 @@ public class AccidentMem {
 
     public boolean update(Accident accident) {
         return accidents.computeIfPresent(accident.getId(), (id, oldAccident) -> new Accident(oldAccident.getId(), accident.getName(),
-                accident.getText(), accident.getAddress(), accident.getType())) != null;
+                accident.getText(), accident.getAddress(), accident.getType(), accident.getRules())) != null;
     }
 
     public Optional<Accident> findById(int id) {
