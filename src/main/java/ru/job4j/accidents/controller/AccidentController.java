@@ -8,6 +8,8 @@ import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.model.AccidentType;
 import ru.job4j.accidents.model.Rule;
 import ru.job4j.accidents.service.AccidentService;
+import ru.job4j.accidents.service.AccidentTypeService;
+import ru.job4j.accidents.service.RuleService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -18,20 +20,15 @@ import java.util.Optional;
 @AllArgsConstructor
 public class AccidentController {
     private final AccidentService accidents;
+    private final AccidentTypeService types;
+    private final RuleService rules;
 
     @GetMapping("/createAccident")
     public String viewCreateAccident(Model model) {
-        List<AccidentType> types = new ArrayList<>();
-        types.add(new AccidentType(1, "Две машины"));
-        types.add(new AccidentType(2, "Машина и человек"));
-        types.add(new AccidentType(3, "Машина и велосипед"));
-        model.addAttribute("types", types);
-        List<Rule> rules = List.of(
-                new Rule(1, "Статья. 1"),
-                new Rule(2, "Статья. 2"),
-                new Rule(3, "Статья. 3")
-        );
-        model.addAttribute("rules", rules);
+        types.save(new AccidentType(1, "Две машины"));
+        types.save(new AccidentType(2, "Машина и человек"));
+        types.save(new AccidentType(3, "Машина и велосипед"));
+        model.addAttribute("types", types.findAll());
         return "createAccident";
     }
 
