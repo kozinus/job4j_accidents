@@ -13,9 +13,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Repository
 @ThreadSafe
 public class RuleMem {
-    private final AtomicInteger nextId = new AtomicInteger(1);
+    private final AtomicInteger nextId = new AtomicInteger(4);
 
     private final Map<Integer, Rule> rules = new ConcurrentHashMap<>();
+
+    public RuleMem() {
+        rules.put(1, new Rule(1, "Статья.1"));
+        rules.put(2, new Rule(2, "Статья.2"));
+        rules.put(3, new Rule(3, "Статья.3"));
+    }
 
     public Optional<Rule> save(Rule rule) {
         rule.setId(nextId.getAndIncrement());
