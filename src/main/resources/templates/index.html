@@ -24,16 +24,16 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Главная</a>
+                        <a class="nav-link active" aria-current="page" th:href="@{/}">Главная</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="@{/}">Инциденты</a>
+                        <a class="nav-link" th:href="@{/}">Инциденты</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="@{/createAccident}">Добавить Инцидент</a>
+                        <a class="nav-link" th:href="@{/createAccident}">Добавить Инцидент</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:text="${user}" href="#"></a>
+                        <a class="nav-link" th:text="${user}" href="@{/}"></a>
                     </li>
                 </ul>
             </div>
@@ -44,7 +44,6 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th><i class="bi bi-square"></i></th>
                     <th scope="col">#</th>
                     <th scope="col">Имя</th>
                     <th scope="col">Тип</th>
@@ -52,13 +51,11 @@
                 </thead>
                 <tbody>
                 <tr th:each="accident: ${accidents}">
-                    <td>
-                        <a th:href="@{|/oneAccident?id=${accident.id}|}">
+                    <td><a th:text="${accident.id}" th:href="@{|/oneAccident?id=${accident.id}|}">
                             <i class="fa fa-edit"></i>
-                        </a>
-                        <span th:text="${accident.name}"></span>
-                        <span th:text="${accident.type.name}"></span>
-                    </td>
+                    </a></td>
+                    <td><a th:text="${accident.name}"></a></td>
+                    <td><a th:text="${accident.type.name}"></a></td>
                 </tr>
                 </tbody>
             </table>

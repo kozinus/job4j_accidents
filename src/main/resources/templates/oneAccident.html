@@ -24,13 +24,13 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="@{/}">Главная</a>
+                    <a class="nav-link active" aria-current="page" th:href="@{/}">Главная</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="@{/}">Инциденты</a>
+                    <a class="nav-link" th:href="@{/}">Инциденты</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="@{/createAccident}">Добавить Инцидент</a>
+                    <a class="nav-link" th:href="@{/createAccident}">Добавить Инцидент</a>
                 </li>
             </ul>
         </div>
@@ -72,8 +72,11 @@
                                     th:value="${rule.id}"></option>
                         </select>
                     </div>
-                    <button class="btn btn-danger" th:href="@{/accidentsDelete/{id}(id=${accident.id})}">Удалить</button>
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <div class="row">
+                        <div class="col-4"><a class="btn btn-light w-100" th:href="@{/}">Отмена</a></div>
+                        <div class="col-4"><a class="btn btn-danger w-100" th:href="@{/accidentsDelete/{id}(id=${accident.id})}">Удалить</a></div>
+                        <div class="col-4"><button class="btn btn-primary w-100" type="submit">Сохранить</button></div>
+                    </div>
                 </form>
             </div>
         </div>

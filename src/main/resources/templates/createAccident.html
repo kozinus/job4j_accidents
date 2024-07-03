@@ -59,9 +59,9 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="type.id" name="rIds">Статья</label>
+                        <label name="rIds">Статья</label>
                         <select class="form-control" id="rIds" name="rIds" multiple>
-                            <option th:each="rule: ${rules}"
+                            <option th:each="rule: ${rules}"`
                                     th:text="${rule.name}"
                                     th:value="${rule.id}"></option>
                         </select>
