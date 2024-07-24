@@ -9,6 +9,7 @@ import ru.job4j.accidents.model.AccidentType;
 import ru.job4j.accidents.model.Rule;
 import ru.job4j.accidents.service.AccidentService;
 import ru.job4j.accidents.service.AccidentTypeService;
+import ru.job4j.accidents.service.ParticipatesService;
 import ru.job4j.accidents.service.RuleService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,7 @@ public class AccidentController {
     private final AccidentService accidents;
     private final AccidentTypeService types;
     private final RuleService rules;
+    private final ParticipatesService participates;
 
     @GetMapping("/createAccident")
     public String viewCreateAccident(Model model) {
@@ -45,6 +47,7 @@ public class AccidentController {
 
     @GetMapping("/accidentsDelete/{id}")
     public String delete(Model model, @PathVariable int id) {
+        participates.deleteByAccidentId(id);
         accidents.deleteById(id);
         return "redirect:/index";
     }
@@ -55,15 +58,24 @@ public class AccidentController {
         String[] typeId = req.getParameterValues("type.id");
         Set<Rule> ruleSet = new HashSet<>();
         Arrays.stream(ids).forEach(x -> {
-            Optional<Rule> rule = rules.findRuleById(Integer.parseInt(x));
-            rule.ifPresent(ruleSet::add);
+            int ruleId = Integer.parseInt(x);
+            Optional<Rule> optRule = rules.findRuleById(ruleId);
+            if (optRule.isPresent()) {
+                ruleSet.add(optRule.get());
+            }
         });
         accident.setRules(ruleSet);
         Optional<AccidentType> type = types.findAccidentTypeById(Integer.parseInt(typeId[0]));
         if (type.isPresent()) {
             accident.setType(type.get());
         }
-        accidents.save(accident);
+        Optional<Accident> optAccident = accidents.save(accident);
+        if (optAccident.isPresent()) {
+            accident = optAccident.get();
+            for (Rule x : accident.getRules()) {
+                participates.save(accident.getId(), x.getId());
+            }
+        }
         return "redirect:/index";
     }
 
@@ -84,6 +96,8 @@ public class AccidentController {
         if (!accidents.update(accident)) {
             return "404";
         }
+        participates.deleteByAccidentId(accident.getId());
+        accident.getRules().forEach(x -> participates.save(accident.getId(), x.getId()));
         return "redirect:/index";
     }
 }
