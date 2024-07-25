@@ -69,13 +69,7 @@ public class AccidentController {
         if (type.isPresent()) {
             accident.setType(type.get());
         }
-        Optional<Accident> optAccident = accidents.save(accident);
-        if (optAccident.isPresent()) {
-            accident = optAccident.get();
-            for (Rule x : accident.getRules()) {
-                participates.save(accident.getId(), x.getId());
-            }
-        }
+        accidents.save(accident);
         return "redirect:/index";
     }
 
@@ -96,8 +90,6 @@ public class AccidentController {
         if (!accidents.update(accident)) {
             return "404";
         }
-        participates.deleteByAccidentId(accident.getId());
-        accident.getRules().forEach(x -> participates.save(accident.getId(), x.getId()));
         return "redirect:/index";
     }
 }

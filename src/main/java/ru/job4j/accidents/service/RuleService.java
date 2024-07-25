@@ -3,7 +3,7 @@ package ru.job4j.accidents.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.job4j.accidents.model.Rule;
-import ru.job4j.accidents.repository.RuleJdbcTemplate;
+import ru.job4j.accidents.repository.RuleHibernate;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -11,10 +11,10 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class RuleService {
-    private final RuleJdbcTemplate ruleMem;
+    private final RuleHibernate ruleMem;
 
     public Optional<Rule> save(Rule rule) {
-        return ruleMem.save(rule);
+        return Optional.ofNullable(ruleMem.save(rule));
     }
 
     public boolean update(Rule rule) {
@@ -26,7 +26,7 @@ public class RuleService {
     }
 
     public Optional<Rule> findRuleById(int id) {
-        return ruleMem.findById(id);
+        return Optional.ofNullable(ruleMem.findById(id));
     }
 
     public Collection<Rule> findAll() {

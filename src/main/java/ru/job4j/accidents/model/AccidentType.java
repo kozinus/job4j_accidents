@@ -1,9 +1,6 @@
 package ru.job4j.accidents.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,6 +9,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
+@Getter
+@Setter
 @Table(name = "accident_types")
 public class AccidentType {
     @EqualsAndHashCode.Include
@@ -19,5 +18,6 @@ public class AccidentType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(name = "at_name")
     private String name;
 }
