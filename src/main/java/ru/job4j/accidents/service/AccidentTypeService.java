@@ -26,7 +26,7 @@ public class AccidentTypeService {
     }
 
     public Optional<AccidentType> findAccidentTypeById(int id) {
-        return Optional.ofNullable(accidentTypeMem.findById(id));
+        return accidentTypeMem.findById(id);
     }
 
     public Collection<AccidentType> findAll() {

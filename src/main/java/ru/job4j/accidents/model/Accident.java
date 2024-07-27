@@ -3,19 +3,16 @@ package ru.job4j.accidents.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Getter
 @Setter
-@ToString
 @Table(name = "accidents")
 public class Accident {
-    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -33,13 +30,13 @@ public class Accident {
     @JoinColumn(name = "type_id")
     private AccidentType type;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "participates",
             joinColumns = { @JoinColumn(name = "accident_id") },
             inverseJoinColumns = { @JoinColumn(name = "rule_id") }
     )
-    private Set<Rule> rules;
+    private Set<Rule> rules = new HashSet<>();
 
     public void addRule(Rule rule) {
         if (rule != null) {

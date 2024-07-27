@@ -26,7 +26,7 @@ public class RuleService {
     }
 
     public Optional<Rule> findRuleById(int id) {
-        return Optional.ofNullable(ruleMem.findById(id));
+        return ruleMem.findById(id);
     }
 
     public Collection<Rule> findAll() {
