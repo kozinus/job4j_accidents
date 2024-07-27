@@ -6,7 +6,6 @@ import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.repository.AccidentRepository;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,6 +37,6 @@ public class AccidentService {
     }
 
     public Collection<Accident> findAll() {
-        return (List<Accident>) accidentMem.findAll();
+        return accidentMem.findAll();
     }
 }
