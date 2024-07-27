@@ -2,34 +2,42 @@ package ru.job4j.accidents.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.job4j.accidents.repository.AccidentHibernate;
 import ru.job4j.accidents.model.Accident;
+import ru.job4j.accidents.repository.AccidentRepository;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class AccidentService {
-    private final AccidentHibernate accidentMem;
+    private final AccidentRepository accidentMem;
 
     public Accident save(Accident accident) {
         return accidentMem.save(accident);
     }
 
     public boolean update(Accident accident) {
-        return accidentMem.update(accident);
+        boolean result;
+        try {
+            accidentMem.save(accident);
+            result = true;
+        } catch (Exception e) {
+            result = false;
+        }
+        return result;
     }
 
-    public boolean deleteById(int id) {
-        return accidentMem.deleteById(id);
+    public void deleteById(int id) {
+        accidentMem.deleteById(id);
     }
 
     public Optional<Accident> findAccidentById(int id) {
-        return accidentMem.findAccidentById(id);
+        return accidentMem.findById(id);
     }
 
     public Collection<Accident> findAll() {
-        return accidentMem.findAll();
+        return (List<Accident>) accidentMem.findAll();
     }
 }
