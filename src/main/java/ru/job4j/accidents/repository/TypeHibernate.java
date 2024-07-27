@@ -23,14 +23,13 @@ public class TypeHibernate {
     }
 
     public boolean update(AccidentType type) {
-        boolean result;
         try {
             crudStore.run(session -> session.merge(type));
-            result = true;
+            return true;
         } catch (Exception e) {
-            result = false;
+            e.printStackTrace();
         }
-        return result;
+        return false;
     }
 
     public Optional<AccidentType> findById(int id) {

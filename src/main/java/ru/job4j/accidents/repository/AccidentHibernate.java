@@ -23,14 +23,13 @@ public class AccidentHibernate {
     }
 
     public boolean update(Accident accident) {
-        boolean result;
         try {
             crudStore.run(session -> session.merge(accident));
-            result = true;
+            return true;
         } catch (Exception e) {
-            result = false;
+            e.printStackTrace();
         }
-        return result;
+        return false;
     }
 
     public Optional<Accident> findAccidentById(int id) {
@@ -40,16 +39,15 @@ public class AccidentHibernate {
     }
 
     public boolean deleteById(int id) {
-        boolean flag;
         try {
             crudStore.run(
                     "delete from Accident where id = :fId",
                     Map.of("fId", id)
             );
-            flag = true;
+            return true;
         } catch (Exception e) {
-            flag = false;
+            e.printStackTrace();
         }
-        return flag;
+        return false;
     }
 }

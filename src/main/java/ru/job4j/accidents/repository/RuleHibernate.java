@@ -23,14 +23,13 @@ public class RuleHibernate {
     }
 
     public boolean update(Rule rule) {
-        boolean result;
         try {
             crudStore.run(session -> session.merge(rule));
-            result = true;
+            return true;
         } catch (Exception e) {
-            result = false;
+            e.printStackTrace();
         }
-        return result;
+        return false;
     }
 
     public Optional<Rule> findById(int id) {
@@ -39,16 +38,15 @@ public class RuleHibernate {
     }
 
     public boolean deleteById(int id) {
-        boolean flag;
         try {
             crudStore.run(
                     "delete from Rule where id = :fId",
                     Map.of("fId", id)
             );
-            flag = true;
+            return true;
         } catch (Exception e) {
-            flag = false;
+            e.printStackTrace();
         }
-        return flag;
+        return false;
     }
 }
