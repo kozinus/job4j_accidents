@@ -18,12 +18,12 @@ public class AccidentService {
     }
 
     public boolean update(Accident accident) {
-        boolean result;
+        boolean result = false;
         try {
             accidentMem.save(accident);
             result = true;
         } catch (Exception e) {
-            result = false;
+            e.printStackTrace();
         }
         return result;
     }
