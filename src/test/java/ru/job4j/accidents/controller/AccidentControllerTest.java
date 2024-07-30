@@ -1,7 +1,9 @@
 package ru.job4j.accidents.controller;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -77,5 +79,40 @@ class AccidentControllerTest {
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/index"));
+    }
+
+    @Test
+    @WithMockUser
+    public void savePageShouldReturnRedirectMessage() throws Exception {
+        this.mockMvc.perform(post("/saveAccident")
+                        .param("rIds", "1")
+                        .param("type.id", "1"))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/index"));
+    }
+
+    @Test
+    @WithMockUser
+    public void updatePageShouldReturnRedirectMessage() throws Exception {
+        when(accidentService.update(any())).thenReturn(true);
+        this.mockMvc.perform(post("/updateAccident")
+                        .param("rIds", "1")
+                        .param("type.id", "1"))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/index"));
+    }
+
+    @Test
+    @WithMockUser
+    public void updatePageShouldReturnError() throws Exception {
+        when(accidentService.update(any())).thenReturn(false);
+        this.mockMvc.perform(post("/updateAccident")
+                        .param("rIds", "1")
+                        .param("type.id", "1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("404"));
     }
 }

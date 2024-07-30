@@ -52,7 +52,7 @@ public class AccidentController {
     @PostMapping("/saveAccident")
     public String save(@ModelAttribute Accident accident, HttpServletRequest req) {
         String[] ids = req.getParameterValues("rIds");
-        String[] typeId = req.getParameterValues("type.id");
+        String typeId = req.getParameter("type.id");
         Set<Rule> ruleSet = new HashSet<>();
         Arrays.stream(ids).forEach(x -> {
             int ruleId = Integer.parseInt(x);
@@ -62,7 +62,7 @@ public class AccidentController {
             }
         });
         accident.setRules(ruleSet);
-        Optional<AccidentType> type = types.findAccidentTypeById(Integer.parseInt(typeId[0]));
+        Optional<AccidentType> type = types.findAccidentTypeById(Integer.parseInt(typeId));
         if (type.isPresent()) {
             accident.setType(type.get());
         }
@@ -73,14 +73,14 @@ public class AccidentController {
     @PostMapping("/updateAccident")
     public String update(@ModelAttribute Accident accident, HttpServletRequest req) {
         String[] ids = req.getParameterValues("rIds");
-        String[] typeId = req.getParameterValues("type.id");
+        String typeId = req.getParameter("type.id");
         Set<Rule> ruleSet = new HashSet<>();
         Arrays.stream(ids).forEach(x -> {
             Optional<Rule> rule = rules.findRuleById(Integer.parseInt(x));
             rule.ifPresent(ruleSet::add);
         });
         accident.setRules(ruleSet);
-        Optional<AccidentType> type = types.findAccidentTypeById(Integer.parseInt(typeId[0]));
+        Optional<AccidentType> type = types.findAccidentTypeById(Integer.parseInt(typeId));
         if (type.isPresent()) {
             accident.setType(type.get());
         }
