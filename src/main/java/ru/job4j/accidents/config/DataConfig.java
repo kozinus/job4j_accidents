@@ -14,10 +14,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
-@Configuration
-@EnableJpaRepositories("ru.job4j.accidents.repository")
-@EnableTransactionManagement
-@Profile("!test")
 public class DataConfig {
 
     @Primary
