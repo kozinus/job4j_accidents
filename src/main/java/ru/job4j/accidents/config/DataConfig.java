@@ -16,8 +16,6 @@ import javax.sql.DataSource;
 
 public class DataConfig {
 
-    @Primary
-    @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource ds) {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(true);
@@ -28,7 +26,6 @@ public class DataConfig {
         return factory;
     }
 
-    @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         JpaTransactionManager txManager = new JpaTransactionManager();
         txManager.setEntityManagerFactory(entityManagerFactory);
